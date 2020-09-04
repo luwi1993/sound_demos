@@ -8,14 +8,17 @@ class WaveLoader:
 
     def load(self, path="files/noise.wav"):
         file = wave.open(path, mode="r")
-        self.samples = [struct.unpack("f", file.readframes(2)) for i in range(int(file.getnframes() / 2))]
+        samples = [struct.unpack("f", file.readframes(2))[0] for i in range(int(file.getnframes() / 2))]
+        self.samples = samples
+        return samples
 
     def plot(self, samples=None):
-        if not samples:
+        if type(samples) == None:
             samples = self.samples
         plt.plot(samples)
         plt.show()
 
-w = WaveLoader()
-w.load()
-w.plot()
+def test():
+    w = WaveLoader()
+    w.load()
+    w.plot()
